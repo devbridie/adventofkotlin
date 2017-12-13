@@ -17,29 +17,24 @@ package com.devbridie.advent.day5
 
 import com.devbridie.advent.fileToLines
 
-data class Program(val jumpLocations: MutableList<Int>) {
-    fun isWithinRange(programCounter: Int): Boolean = programCounter < jumpLocations.size
-
-    fun step(programCounter: Int): Int {
-        val jumpDelta = jumpLocations[programCounter]
-        jumpLocations[programCounter]++
-
-        return programCounter + jumpDelta
-    }
-}
-
 fun main(args: Array<String>) {
-    val jumpOffsets = fileToLines("day5/input").map { it.toInt() }.toMutableList()
-    println(followJumps(jumpOffsets))
+    val jumpOffsets = fileToLines("day5/input").map { it.toInt() }
+    println(jumpsToReachExit(jumpOffsets))
 }
 
-fun followJumps(jumpOffsets: MutableList<Int>): Int {
-    val program = Program(jumpOffsets)
-    var jumps = 0
-    var programCounter = 0
-    while (program.isWithinRange(programCounter)) {
-        programCounter = program.step(programCounter)
-        jumps++
+data class ProgramState(val jumpLocations: List<Int>, val programCounter: Int)
+
+fun programStateSequence(initialJumpLocations: List<Int>): Sequence<ProgramState> {
+    return generateSequence(ProgramState(initialJumpLocations, 0)) { (jumpLocations, programCounter) ->
+        if (programCounter >= jumpLocations.size) return@generateSequence null
+        val jumpDelta = jumpLocations[programCounter]
+
+        val newJumpLocations = jumpLocations.mapIndexed { index, jump ->
+            if (index == programCounter) jump + 1 else jump
+        }
+        val newProgramCounter = programCounter + jumpDelta
+        ProgramState(newJumpLocations, newProgramCounter)
     }
-    return jumps
 }
+
+fun jumpsToReachExit(jumpOffsets: List<Int>): Int = programStateSequence(jumpOffsets).count() - 1
