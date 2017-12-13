@@ -1,6 +1,6 @@
 // --- Part Two ---
 
-// How many steps away is the furthest he ever got from his starting position?
+// How many steps away is the furthest he ever got from his starting depth?
 
 package com.devbridie.advent.day11
 
