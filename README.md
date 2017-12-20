@@ -25,7 +25,7 @@ As a guideline, the examples given in the puzzles are used as test data. Also, t
 |   17  | :white_check_mark: |                    |         |
 |   18  |                    |                    |         |
 |   19  | :white_check_mark: | :white_check_mark: |         |
-|   20  |                    |                    |         |
+|   20  | :white_check_mark: | :white_check_mark: |         |
 |   21  |                    |                    |         |
 |   22  |                    |                    |         |
 |   23  |                    |                    |         |
